@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: house-price-predictor
+    runtime: python312
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python -c 'from src import predict'"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+
+jobs:
+  - type: background_worker
+    name: house-price-trainer
+    runtime: python312
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python -c 'from src import train'"
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
