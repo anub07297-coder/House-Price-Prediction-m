@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: house-price-predictor
+    runtime: python312
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py predict --model_path models/saved_model.pkl"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+
+  - type: background_worker
+    name: house-price-trainer
+    runtime: python312
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py train --data data/housing.csv --output models/saved_model.pkl --evaluate"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
